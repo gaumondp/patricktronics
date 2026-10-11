@@ -240,6 +240,14 @@ static void cdc_task(void) {}
 #define usb_retry(ms) ((void)(ms))
 #define usb_detach() ((void)0)
 #include "../../firmware/src/master.c"
+/* Patricktronics generative layer (same order as src/felucca.c) */
+#include "../../firmware/src/ptrx_rng.c"
+#include "../../firmware/src/ptrx_mutate.c"
+#include "../../firmware/src/ptrx_timer.c"
+#include "../../firmware/src/ptrx_store.c"
+#include "../../firmware/src/ptrx_palette.c"
+#include "../../firmware/src/ptrx_perform.c"
+
 #include "../../firmware/src/main.c"
 #undef usb_poll
 #undef usb_start

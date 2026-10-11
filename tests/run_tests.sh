@@ -179,6 +179,18 @@ run "keys and buttons: fast press, long release, bouncy contacts (one note each)
 
 $CC -o "$OUT/midi_uart_test" tests/midi_uart_test.c
 run "TRS MIDI parser" "$OUT/midi_uart_test"
+$CC -Ifirmware/src -o "$OUT/ptrx_test" tests/ptrx_test.c firmware/src/ptrx_rng.c
+run "Patricktronics PRNG stream" "$OUT/ptrx_test"
+$CC -DPTRX_HOST -Itests -Ifirmware/src -o "$OUT/ptrx_mutate_test" tests/ptrx_mutate_test.c firmware/src/ptrx_rng.c firmware/src/ptrx_mutate.c
+run "Patricktronics bounded mutation (palette invariant)" "$OUT/ptrx_mutate_test"
+$CC -Ifirmware/src -o "$OUT/ptrx_timer_test" tests/ptrx_timer_test.c firmware/src/ptrx_timer.c
+run "Patricktronics mutation timer (rate -> frequency)" "$OUT/ptrx_timer_test"
+$CC -DPTRX_HOST -Itests -Ifirmware/src -o "$OUT/ptrx_store_test" tests/ptrx_store_test.c firmware/src/ptrx_store.c
+run "Patricktronics config store (non-destructive, 16 slots)" "$OUT/ptrx_store_test"
+$CC -DPTRX_HOST -Itests -Ifirmware/src -o "$OUT/ptrx_cost_test" tests/ptrx_cost_test.c firmware/src/ptrx_mutate.c
+run "Patricktronics mutation cost guard (O(len))" "$OUT/ptrx_cost_test"
+$CC -DPTRX_HOST -Itests -Ifirmware/src -o "$OUT/ptrx_palette_test" tests/ptrx_palette_test.c firmware/src/ptrx_palette.c
+run "Patricktronics play-captured palette" "$OUT/ptrx_palette_test"
 
 HALF=$(sed -n 's/^#define HALF_FRAMES \([0-9]*\).*/\1/p' firmware/src/core.h)
 $CC -O2 -DT_CDC=1 -DHALF_FRAMES=$HALF -o "$OUT/uac_test" tests/uac_test.c -lm

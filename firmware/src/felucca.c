@@ -102,4 +102,13 @@
 #include "console.c"
 #endif
 #include "master.c"              /* the MASTER pot (#137: read before the audio starts) */
+
+/* Patricktronics generative layer (host-tested primitives + the main-loop glue) */
+#include "ptrx_rng.c"
+#include "ptrx_mutate.c"
+#include "ptrx_timer.c"
+#include "ptrx_store.c"
+#include "ptrx_palette.c"
+#include "ptrx_perform.c"
+
 #include "main.c"

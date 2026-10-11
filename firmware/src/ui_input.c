@@ -995,6 +995,10 @@ static void edit_param(uint32_t slot, int32_t steps)
         fop_knob(slot, steps);
         return;
     }
+    if (ptrx_page(pg->graph)) {                          /* Patricktronics: ENABLE RATE DENSITY (ui_ptrx.c) */
+        ptrx_knob(slot, steps);
+        return;
+    }
     if (pg->graph == GR_MOD && slot == 0u) {             /* MOD: KNOB 1 the slot, 2..4 its SRC DST AMT */
         mod_ui_slot = (uint8_t)clamp((int32_t)mod_ui_slot + (steps > 0 ? 1 : -1), 0, 3);
         return;
@@ -1588,6 +1592,10 @@ static void ui_input(void)
             uint32_t both = (1u << panel.btn[B_OCTDN]) | (1u << panel.btn[B_OCTUP]);
             if (act_cols() || layer_set_open() || ui.ml.on)   /* action pages: enter / back (below); SET layers: OCT-; */
                 break;                                  /* MIDI LEARN: clear / done (below) */
+            if (b == B_OCTUP && !ui.home && !ui.menu && cur_page()->graph == GR_PTRX) {
+                ptrx_oct();                             /* PTRX page: OCT+ re-rolls the performance (RESEED) */
+                break;
+            }
             if ((fm1_in.buttons & both) == both)
                 song.octave = 0;
             else

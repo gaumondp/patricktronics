@@ -2,3 +2,8 @@ build/
 .DS_Store
 __pycache__/
 *.fwsc
+
+# Patricktronics dev
+.venv/
+build/
+.kiro/

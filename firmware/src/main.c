@@ -275,6 +275,11 @@ static void fm1_main(void)
         ui_input();
         settings_poll();                              /* queued settings save: only while stopped */
         autosave_poll();                              /* (1.2) the music, stopped and idle: project.c */
+        /* Patricktronics: seed on first touch, mutate the selected track while
+         * playing. Main loop only, never the audio ISR. */
+        ptrx_perform_poll(fm1_ms,
+                          (fm1_in.buttons != 0u) || (fm1_in.notes != 0u),
+                          song.playing, song.batt_raw);
         felucca_dbg.stage = 2;
         ui_leds();
         ui_draw();

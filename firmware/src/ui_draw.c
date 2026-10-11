@@ -1074,6 +1074,15 @@ static void draw_columns(void)
         }
         return;
     }
+    if (ptrx_page(cur_page()->graph)) {                  /* Patricktronics (ui_ptrx.c): ENABLE RATE DENSITY RESEED */
+        for (c = 0; c < 4u; c++) {
+            const char *lb, *u;
+            int32_t r;
+            int on = ptrx_card(c, &lb, val, &u, &r);
+            draw_column(c, lb, val, u, on ? VAL(c) : T_DIM, r, ICON_NONE);
+        }
+        return;
+    }
     if (cur_page()->graph == GR_MOD) {                   /* SLOT, then that slot's SRC DST AMT */
         const track_t *t = TSEL;
         uint32_t id = P_M1SRC + 3u * mod_ui_slot;
@@ -1230,7 +1239,7 @@ static void draw_columns(void)
 #define SPL_X0 ((240u - SPL_SQ) / 2u)               /* its top-left on the screen (x and y) */
 #define SPL_PAD 16                                  /* the text's inset: left (its ink), top and bottom (the capitals) */
 #define SPL_PITCH 20                                /* line to line */
-static const char *const SPLASH_LINES[] = {"Felucca", FELUCCA_VERSION, "H\xFCgelton Instruments", "with community"};
+static const char *const SPLASH_LINES[] = {"Patricktronics", FELUCCA_VERSION, "on Felucca", "H\xFCgelton + community"};
 /* a band of two lines, h tall, at y on the screen: the first line's top at ly; the two lines' capitals declared
  * against al0..al1 (mode: AL_V the band centred there, AL_B the last baseline on al1) */
 static void splash_band(uint32_t y, uint32_t h, int32_t ly, const char *const *l, uint32_t mode, int32_t al0,

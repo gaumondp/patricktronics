@@ -148,6 +148,14 @@ static struct { uint32_t stage; } felucca_dbg;
 #include "../firmware/src/ui.c"
 #include "../firmware/src/menu_items.c"
 #include "../firmware/src/icons.c"
+/* Patricktronics generative layer: ui_graph.c pulls in ui_ptrx.c, which needs
+ * ptrx_perform and ptrx_perform_reseed. These modules are header-light (no
+ * <string.h>; core.h is already included via ui.c). */
+#include "../firmware/src/ptrx_rng.c"
+#include "../firmware/src/ptrx_mutate.c"
+#include "../firmware/src/ptrx_timer.c"
+#include "../firmware/src/ptrx_palette.c"
+#include "../firmware/src/ptrx_perform.c"
 #include "../firmware/src/ui_graph.c"
 #include "../firmware/src/ui_draw.c"
 #include "../firmware/src/ui_menu.c"
